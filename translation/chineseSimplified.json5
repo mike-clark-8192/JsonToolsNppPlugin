@@ -246,6 +246,7 @@
         "Select every val&id JSON in selection": "选择区域内所有有&效 JSON",
         "Chec&k JSON syntax now": "立即检查 &JSON 语法",
         "Open &JSON tree viewer": "打开 &JSON 树视图",
+        "Select &tree node at caret": "在光标处选择(&T)树节点",
         "&Get JSON from files and APIs": "从&文件和 API 获取 JSON",
         "Sort arra&ys": "排序数&组",
         "&Settings": "&设置",

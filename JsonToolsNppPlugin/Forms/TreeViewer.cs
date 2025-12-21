@@ -751,6 +751,73 @@ namespace JSON_Tools.Forms
         }
 
         /// <summary>
+        /// Finds and selects the tree node containing the current caret position.
+        /// Expands parent nodes as needed to reveal the target.
+        /// </summary>
+        public void SelectNodeAtCaretPosition()
+        {
+            if (Tree.Nodes.Count == 0 || json == null) return;
+
+            int caretPos = Npp.editor.GetCurrentPos();
+            TreeNode currentTreeNode = Tree.Nodes[0]; // root
+            JNode currentJNode = json;
+
+            // Descend through tree finding child containing caret position
+            while (currentJNode is JArray || currentJNode is JObject)
+            {
+                ReplaceSentinelWithChildren(Tree, currentTreeNode);
+
+                JNode childJNode = FindChildContainingPosition(currentJNode, caretPos);
+                if (childJNode == null) break;
+
+                TreeNode childTreeNode = FindTreeNodeForJNode(currentTreeNode, childJNode);
+                if (childTreeNode == null) break; // sparse tree - stop at current level
+
+                currentTreeNode = childTreeNode;
+                currentJNode = childJNode;
+            }
+
+            Tree.SelectedNode = currentTreeNode;
+            currentTreeNode.EnsureVisible();
+        }
+
+        /// <summary>
+        /// Finds the child JNode that contains the given position.
+        /// For arrays, uses reverse iteration to find the last child with position &lt;= pos.
+        /// For objects, finds the child with the highest position that is still &lt;= pos.
+        /// </summary>
+        private JNode FindChildContainingPosition(JNode parent, int pos)
+        {
+            if (parent is JArray arr)
+            {
+                // Find last child with position <= pos
+                for (int i = arr.Length - 1; i >= 0; i--)
+                    if (arr[i].position <= pos) return arr[i];
+            }
+            else if (parent is JObject obj)
+            {
+                JNode best = null;
+                foreach (var kv in obj.children)
+                    if (kv.Value.position <= pos &&
+                        (best == null || kv.Value.position > best.position))
+                        best = kv.Value;
+                return best;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Finds the TreeNode child of the given parent that corresponds to the target JNode.
+        /// </summary>
+        private TreeNode FindTreeNodeForJNode(TreeNode parent, JNode target)
+        {
+            foreach (TreeNode child in parent.Nodes)
+                if (pathsToJNodes.TryGetValue(child.FullPath, out JNode jn) && jn == target)
+                    return child;
+            return null;
+        }
+
+        /// <summary>
         /// We use a sentinel node to indicate that a node's corresponding JNode
         /// has children that have not yet been associated with their own tree nodes.<br></br>
         /// This mechanism improves performance by allowing us to lazily construct the tree on demand.

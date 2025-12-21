@@ -179,6 +179,7 @@
         "Select every val&id JSON in selection": "選擇區域內所有有&效 JSON(&I)",
         "Chec&k JSON syntax now": "立即檢查 &JSON 語法(&K)",
         "Open &JSON tree viewer": "開啟 &JSON 樹狀檢視(&J)",
+        "Select &tree node at caret": "在光標位置(&T)選擇樹節點",
         "&Get JSON from files and APIs": "從&檔案和 API 獲取 JSON(&G)",
         "Sort arra&ys": "排序陣&列(&Y)",
         "&Settings": "&設定(&S)",

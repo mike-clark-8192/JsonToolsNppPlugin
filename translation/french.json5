@@ -179,6 +179,7 @@
         "Select every val&id JSON in selection": "Sélectionner chaque JSON val&ide dans la sélection",
         "Chec&k JSON syntax now": "Vérifier la syntaxe JSON maintenant (&K)", // Keeping K from Check
         "Open &JSON tree viewer": "Ouvrir la vue arborescente &JSON",
+        "Select &tree node at caret": "Sélectionner le nœud de &l'arbre au curseur",
         "&Get JSON from files and APIs": "Obtenir du JSON depuis des fichiers et API (&G)",
         "Sort arra&ys": "Trier les tablea&ux", // Ys -> ux
         "&Settings": "Paramètre&s",

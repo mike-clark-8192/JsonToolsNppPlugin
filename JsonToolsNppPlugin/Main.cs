@@ -105,6 +105,7 @@ namespace Kbg.NppPluginNET
         static internal int compressId = -1;
         static internal int prettyPrintId = -1;
         static internal int pathToPositionId = -1;
+        static internal int selectTreeNodeAtCaretId = -1;
         #endregion
 
         #region " Startup/CleanUp "
@@ -136,29 +137,30 @@ namespace Kbg.NppPluginNET
             // Here you insert a separator
             PluginBase.SetCommand(6, "---", null);
             PluginBase.SetCommand(7, Translator.GetTranslatedMenuItem("Open &JSON tree viewer"), () => OpenJsonTree(), getShortcutKey(true, true, true, Keys.J)); jsonTreeId = 7;
-            PluginBase.SetCommand(8, Translator.GetTranslatedMenuItem("&Get JSON from files and APIs"), OpenGrepperForm, getShortcutKey(true, true, true, Keys.G)); grepperFormId = 8;
-            PluginBase.SetCommand(9, Translator.GetTranslatedMenuItem("Sort arra&ys"), OpenSortForm); sortFormId = 9;
-            PluginBase.SetCommand(10, Translator.GetTranslatedMenuItem("&Settings"), OpenSettings, getShortcutKey(true, true, true, Keys.S));
-            PluginBase.SetCommand(11, "---", null);
-            PluginBase.SetCommand(12, Translator.GetTranslatedMenuItem("&Validate JSON against JSON schema"), () => ValidateJson());
-            PluginBase.SetCommand(13, Translator.GetTranslatedMenuItem("Validate &files with JSON schema if name matches pattern"), MapSchemasToFnamePatterns);
-            PluginBase.SetCommand(14, Translator.GetTranslatedMenuItem("Generate sc&hema from JSON"), GenerateJsonSchema);
-            PluginBase.SetCommand(15, Translator.GetTranslatedMenuItem("Generate &random JSON from schema"), GenerateRandomJson);
-            PluginBase.SetCommand(16, "---", null);
-            PluginBase.SetCommand(17, Translator.GetTranslatedMenuItem("Run &tests"), async () => await TestRunner.RunAll());
-            PluginBase.SetCommand(18, Translator.GetTranslatedMenuItem("A&bout"), ShowAboutForm); AboutFormId = 18;
-            PluginBase.SetCommand(19, Translator.GetTranslatedMenuItem("See most recent syntax &errors in this file"), () => OpenErrorForm(activeFname, false)); errorFormId = 19;
-            PluginBase.SetCommand(20, Translator.GetTranslatedMenuItem("JSON to YAML"), DumpYaml);
-            PluginBase.SetCommand(21, "---", null);
-            PluginBase.SetCommand(22, Translator.GetTranslatedMenuItem("Parse JSON Li&nes document"), () => OpenJsonTree(DocumentType.JSONL));
-            PluginBase.SetCommand(23, Translator.GetTranslatedMenuItem("&Array to JSON Lines"), DumpJsonLines);
-            PluginBase.SetCommand(24, "---", null);
-            PluginBase.SetCommand(25, Translator.GetTranslatedMenuItem("D&ump selected text as JSON string(s)"), DumpSelectedTextAsJsonString);
-            PluginBase.SetCommand(26, Translator.GetTranslatedMenuItem("Dump JSON string(s) as ra&w text"), DumpSelectedJsonStringsAsText);
-            PluginBase.SetCommand(27, "---", null);
-            PluginBase.SetCommand(28, Translator.GetTranslatedMenuItem("Open tree for &INI file"), () => OpenJsonTree(DocumentType.INI));
-            PluginBase.SetCommand(29, "---", null);
-            PluginBase.SetCommand(30, Translator.GetTranslatedMenuItem("Rege&x search to JSON"), RegexSearchToJson);
+            PluginBase.SetCommand(8, Translator.GetTranslatedMenuItem("Select &tree node at caret"), SelectTreeNodeAtCaret, getShortcutKey(true, true, true, Keys.T)); selectTreeNodeAtCaretId = 8;
+            PluginBase.SetCommand(9, Translator.GetTranslatedMenuItem("&Get JSON from files and APIs"), OpenGrepperForm, getShortcutKey(true, true, true, Keys.G)); grepperFormId = 9;
+            PluginBase.SetCommand(10, Translator.GetTranslatedMenuItem("Sort arra&ys"), OpenSortForm); sortFormId = 10;
+            PluginBase.SetCommand(11, Translator.GetTranslatedMenuItem("&Settings"), OpenSettings, getShortcutKey(true, true, true, Keys.S));
+            PluginBase.SetCommand(12, "---", null);
+            PluginBase.SetCommand(13, Translator.GetTranslatedMenuItem("&Validate JSON against JSON schema"), () => ValidateJson());
+            PluginBase.SetCommand(14, Translator.GetTranslatedMenuItem("Validate &files with JSON schema if name matches pattern"), MapSchemasToFnamePatterns);
+            PluginBase.SetCommand(15, Translator.GetTranslatedMenuItem("Generate sc&hema from JSON"), GenerateJsonSchema);
+            PluginBase.SetCommand(16, Translator.GetTranslatedMenuItem("Generate &random JSON from schema"), GenerateRandomJson);
+            PluginBase.SetCommand(17, "---", null);
+            PluginBase.SetCommand(18, Translator.GetTranslatedMenuItem("Run &tests"), async () => await TestRunner.RunAll());
+            PluginBase.SetCommand(19, Translator.GetTranslatedMenuItem("A&bout"), ShowAboutForm); AboutFormId = 19;
+            PluginBase.SetCommand(20, Translator.GetTranslatedMenuItem("See most recent syntax &errors in this file"), () => OpenErrorForm(activeFname, false)); errorFormId = 20;
+            PluginBase.SetCommand(21, Translator.GetTranslatedMenuItem("JSON to YAML"), DumpYaml);
+            PluginBase.SetCommand(22, "---", null);
+            PluginBase.SetCommand(23, Translator.GetTranslatedMenuItem("Parse JSON Li&nes document"), () => OpenJsonTree(DocumentType.JSONL));
+            PluginBase.SetCommand(24, Translator.GetTranslatedMenuItem("&Array to JSON Lines"), DumpJsonLines);
+            PluginBase.SetCommand(25, "---", null);
+            PluginBase.SetCommand(26, Translator.GetTranslatedMenuItem("D&ump selected text as JSON string(s)"), DumpSelectedTextAsJsonString);
+            PluginBase.SetCommand(27, Translator.GetTranslatedMenuItem("Dump JSON string(s) as ra&w text"), DumpSelectedJsonStringsAsText);
+            PluginBase.SetCommand(28, "---", null);
+            PluginBase.SetCommand(29, Translator.GetTranslatedMenuItem("Open tree for &INI file"), () => OpenJsonTree(DocumentType.INI));
+            PluginBase.SetCommand(30, "---", null);
+            PluginBase.SetCommand(31, Translator.GetTranslatedMenuItem("Rege&x search to JSON"), RegexSearchToJson);
 
             // write the schema to fname patterns file if it doesn't exist, then parse it
             SetSchemasToFnamePatternsFname();
@@ -1546,6 +1548,35 @@ namespace Kbg.NppPluginNET
             else
                 SelectionManager.SetSelectionsFromStartEnds(startEnds);
             TryParseJson(DocumentType.JSON, false);
+        }
+
+        /// <summary>
+        /// Select the tree node corresponding to the current caret position in the editor.
+        /// Requires a tree viewer to be open for the current file.
+        /// </summary>
+        internal static void SelectTreeNodeAtCaret()
+        {
+            if (!TryGetInfoForFile(activeFname, out JsonFileInfo info))
+            {
+                Translator.ShowTranslatedMessageBox(
+                    "No tree viewer is open for this file.",
+                    "JsonTools: Cannot select tree node",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+                return;
+            }
+            if (info.tv == null || info.tv.IsDisposed)
+            {
+                Translator.ShowTranslatedMessageBox(
+                    "No tree viewer is open for this file.",
+                    "JsonTools: Cannot select tree node",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+                return;
+            }
+            info.tv.SelectNodeAtCaretPosition();
         }
 
         /// <summary>

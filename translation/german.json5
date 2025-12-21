@@ -179,6 +179,7 @@
         "Select every val&id JSON in selection": "Jedes gültige JSON in der Auswahl auswählen (&I)", // id -> i
         "Chec&k JSON syntax now": "JSON-Syntax jetzt prüfen (&K)", // Check -> K
         "Open &JSON tree viewer": "&JSON-Baumansicht öffnen",
+        "Select &tree node at caret": "&Baumknoten an der Einfügemarke auswählen",
         "&Get JSON from files and APIs": "JSON aus Dateien und APIs abrufen (&G)",
         "Sort arra&ys": "Arra&ys sortieren",
         "&Settings": "Ein&stellungen",

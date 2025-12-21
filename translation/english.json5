@@ -245,6 +245,7 @@
         "Select every val&id JSON in selection": "Select every val&id JSON in selection",
         "Chec&k JSON syntax now": "Chec&k JSON syntax now",
         "Open &JSON tree viewer": "Open &JSON tree viewer",
+        "Select &tree node at caret": "Select &tree node at caret",
         "&Get JSON from files and APIs": "&Get JSON from files and APIs",
         "Sort arra&ys": "Sort arra&ys",
         "&Settings": "&Settings",

@@ -179,6 +179,7 @@
         "Select every val&id JSON in selection": "選択範囲内のすべての有効なJSONを選択(&I)",
         "Chec&k JSON syntax now": "JSON構文を今すぐチェック(&K)",
         "Open &JSON tree viewer": "JSONツリービューアを開く(&J)",
+        "Select &tree node at caret": "キャレット位置(&T)のツリーノードを選択",
         "&Get JSON from files and APIs": "ファイルとAPIからJSONを取得(&G)",
         "Sort arra&ys": "配列をソート(&Y)",
         "&Settings": "設定(&S)",

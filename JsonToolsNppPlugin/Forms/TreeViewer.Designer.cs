@@ -92,6 +92,7 @@ namespace JSON_Tools.Forms
             this.Tree.Location = new System.Drawing.Point(4, 99);
             this.Tree.Name = "Tree";
             this.Tree.Size = new System.Drawing.Size(457, 331);
+            this.Tree.HideSelection = false;
             this.Tree.TabIndex = 7;
             this.Tree.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.Tree_BeforeExpand);
             this.Tree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.Tree_AfterSelect);

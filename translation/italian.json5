@@ -245,6 +245,7 @@
         "Select every val&id JSON in selection": "Seleziona ogni JSON val&ido della selezione",
         "Chec&k JSON syntax now": "&Verifica la sintassi del JSON",
         "Open &JSON tree viewer": "Apri Visualizzazione struttura &JSON",
+        "Select &tree node at caret": "Seleziona nodo &albero al cursore",
         "&Get JSON from files and APIs": "&Ottieni JSON da file e API",
         "Sort arra&ys": "Ordina arra&y",
         "&Settings": "I&mpostazioni",

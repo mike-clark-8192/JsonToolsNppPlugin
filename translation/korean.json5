@@ -179,6 +179,7 @@
         "Select every val&id JSON in selection": "선택 영역 내 모든 유효한 JSON 선택(&I)",
         "Chec&k JSON syntax now": "지금 JSON 구문 검사(&K)",
         "Open &JSON tree viewer": "JSON 트리 뷰어 열기(&J)",
+        "Select &tree node at caret": "캐럿 위치에서 트리(&T) 노드 선택",
         "&Get JSON from files and APIs": "파일 및 API에서 JSON 가져오기(&G)",
         "Sort arra&ys": "배열 정렬(&Y)",
         "&Settings": "설정(&S)",

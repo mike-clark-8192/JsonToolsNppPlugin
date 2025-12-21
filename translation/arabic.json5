@@ -213,6 +213,7 @@
         "Select every val&id JSON in selection": "تحديد كل JSON صالح في التحديد (&I)",
         "Chec&k JSON syntax now": "فحص صيغة JSON الآن (&K)",
         "Open &JSON tree viewer": "فتح عارض شجرة JSON (&J)",
+        "Select &tree node at caret": "تحديد عقدة شجرة عند الفاصلة (&T)",
         "&Get JSON from files and APIs": "الحصول على JSON من الملفات وواجهات برمجة التطبيقات (&G)",
         "Sort arra&ys": "فرز المصفوفات (&Y)",
         "&Settings": "الإعدادات (&S)",
